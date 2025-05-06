@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "644520750473",
+    "project_id": "apex-1bdbe",
+    "storage_bucket": "apex-1bdbe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644520750473:android:fff2f2abc8532036328558",
+        "android_client_info": {
+          "package_name": "com.Zawadi.apex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCudxQSYN_JSe6IR4Qs74GjqNoDUkJM6RE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
