@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import org.gradle.kotlin.dsl.debugImplementation
 import org.gradle.kotlin.dsl.implementation
 
@@ -91,4 +92,11 @@ dependencies {
 
 
 
+=======
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.compose) apply false
+>>>>>>> 7b4f4fae23d367a896f89fc95ae0fb30070d073a
 }
