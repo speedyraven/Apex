@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -38,8 +40,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.Zawadi.apex.R
+import com.Zawadi.apex.navigation.ROUT_GAMES
+import com.Zawadi.apex.navigation.ROUT_HOME
+import com.Zawadi.apex.navigation.ROUT_MESSAGES
+import com.Zawadi.apex.navigation.ROUT_PROFILE
+import com.Zawadi.apex.navigation.ROUT_SETTINGS
 
-        @Composable
+@Composable
         fun HomeScreen(navController: NavHostController) {
             // Main content layout
             Column(
@@ -79,7 +86,7 @@ import com.Zawadi.apex.R
                     .background(Color.Gray)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground), // Replace with actual profile image
+                    painter = painterResource(id = R.drawable.letterlogo), // Replace with actual profile image
                     contentDescription = "Profile Image",
                     modifier = Modifier.fillMaxSize()
                 )
@@ -99,24 +106,48 @@ import com.Zawadi.apex.R
         fun NavigationButtons(navController: NavHostController) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Button(
-                    onClick = { navController.navigate("profile") },
-                    modifier = Modifier.fillMaxWidth().padding(8.dp)
-                ) {
+                    onClick = { navController.navigate(ROUT_PROFILE) },
+                    colors = ButtonDefaults.buttonColors(Color.DarkGray),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp),
+                    shape = RoundedCornerShape(5.dp))
+                {
                     Text(text = "Go to Profile")
                 }
 
                 Button(
-                    onClick = { navController.navigate("settings") },
-                    modifier = Modifier.fillMaxWidth().padding(8.dp)
+
+                    onClick = { navController.navigate(ROUT_SETTINGS) },
+                    colors = ButtonDefaults.buttonColors(Color.DarkGray),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp),
+                    shape = RoundedCornerShape(5.dp)
                 ) {
                     Text(text = "Settings")
                 }
 
                 Button(
-                    onClick = { navController.navigate("messages") },
-                    modifier = Modifier.fillMaxWidth().padding(8.dp)
+                    onClick = { navController.navigate(ROUT_MESSAGES) },
+                    colors = ButtonDefaults.buttonColors(Color.DarkGray),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp),
+                    shape = RoundedCornerShape(5.dp)
                 ) {
                     Text(text = "Messages")
+                }
+                Button(
+
+                    onClick = { navController.navigate(ROUT_GAMES) },
+                    colors = ButtonDefaults.buttonColors(Color.DarkGray),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp),
+                    shape = RoundedCornerShape(5.dp)
+                ) {
+                    Text(text = "Go to games")
                 }
             }
         }
