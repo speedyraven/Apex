@@ -10,7 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.Zawadi.apex.navigation.ROUT_BOOKING
+import com.Zawadi.apex.navigation.Routes.ROUT_BOOKING
+import com.Zawadi.apex.navigation.Routes.ROUT_GAMEPROFILE
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,7 +35,7 @@ fun SuccessScreen(navController: NavController) {
             Button(
                 onClick = {
                     // Navigate to the Home screen or any other destination
-                    navController.navigate(ROUT_BOOKING) {
+                    navController.navigate(ROUT_GAMEPROFILE) {
                         // Clear back stack to avoid returning to success screen
                         popUpTo("payment") { inclusive = true }
                     }

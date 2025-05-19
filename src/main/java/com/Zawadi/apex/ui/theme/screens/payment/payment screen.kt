@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.Zawadi.apex.models.PaymentInfo
-import com.Zawadi.apex.navigation.ROUT_SECCESS
+import com.Zawadi.apex.navigation.Routes.ROUT_SUCCESS
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,7 +94,7 @@ fun PaymentScreen(navController: NavController) {
                     )
                     // Log or process the payment
                     println("Payment Info: $paymentInfo")
-                    navController.navigate(ROUT_SECCESS) // Navigate to success screen
+                    navController.navigate(ROUT_SUCCESS) // Navigate to success screen
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {

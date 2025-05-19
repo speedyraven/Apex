@@ -1,12 +1,16 @@
 package com.Zawadi.apex.data
 
+import com.Zawadi.apex.navigation.Routes.ROUT_SIGNUP
+
+
+
 import android.content.Context
 import android.widget.Toast
 import androidx.navigation.NavController
+import com.Zawadi.apex.navigation.Routes.ROUT_HOME
 import com.Zawadi.apex.models.User
-import com.Zawadi.apex.navigation.ROUT_HOME
-import com.Zawadi.apex.navigation.ROUT_LOGIN
-import com.Zawadi.apex.navigation.ROUT_SIGNUP
+import com.Zawadi.apex.navigation.Routes.ROUT_ABOUT
+
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -57,7 +61,7 @@ class AuthViewModel(var navController: NavController, var context: Context){
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                 if (it.isSuccessful ){
                     Toast.makeText(this.context, "Success", Toast.LENGTH_SHORT).show()
-                    navController.navigate(ROUT_HOME)
+                    navController.navigate(ROUT_ABOUT)
                 }else{
                     Toast.makeText(this.context, "Error", Toast.LENGTH_SHORT).show()
                 }
@@ -68,7 +72,7 @@ class AuthViewModel(var navController: NavController, var context: Context){
 
     fun logout(){
         mAuth.signOut()
-        navController.navigate(ROUT_HOME)
+        navController.navigate(ROUT_ABOUT)
     }
 
     fun isLoggedIn(): Boolean = mAuth.currentUser != null

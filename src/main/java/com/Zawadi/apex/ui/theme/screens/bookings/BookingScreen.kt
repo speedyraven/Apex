@@ -38,8 +38,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.Zawadi.apex.navigation.ROUT_BOOKING_CONFIRMATION
-import com.Zawadi.apex.navigation.ROUT_LOUNGE_CHECKIN
+import com.Zawadi.apex.navigation.Routes.ROUT_BOOKING
+import com.Zawadi.apex.navigation.Routes.ROUT_BOOKING_CONFIRMATION
+import com.Zawadi.apex.navigation.Routes.ROUT_LOUNGE_CHECKIN
+
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 

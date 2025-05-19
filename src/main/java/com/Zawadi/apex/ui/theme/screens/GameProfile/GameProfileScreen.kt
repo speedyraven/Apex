@@ -1,6 +1,8 @@
 package com.Zawadi.apex.ui.theme.screens.GameProfile
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,38 +18,52 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.Zawadi.apex.navigation.ROUT_ADDPAYMENT
-import com.Zawadi.apex.navigation.ROUT_BOOKING
-import com.Zawadi.apex.navigation.ROUT_EDITPROFILE
-import com.Zawadi.apex.navigation.ROUT_HOME
+import com.Zawadi.apex.R
+import com.Zawadi.apex.navigation.Routes.ROUT_ADDPAYMENT
+import com.Zawadi.apex.navigation.Routes.ROUT_BOOKING
+import com.Zawadi.apex.navigation.Routes.ROUT_BOOKING_CONFIRMATION
+import com.Zawadi.apex.navigation.Routes.ROUT_EDITPROFILE
+import com.Zawadi.apex.navigation.Routes.ROUT_PAYMENT
+
 
 @Composable
 fun GameProfileScreen(navController: NavHostController) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        // Personal Information Section
-        Text("Personal Information", style = MaterialTheme.typography.headlineMedium)
-        PersonalInfoSection(navController)
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Background Image
+        Image(
+            painter = painterResource(id = R.drawable.games), // Replace with your background image
+            contentDescription = "Background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            // Personal Information Section
+            Text("Personal Information", style = MaterialTheme.typography.headlineMedium)
+            PersonalInfoSection(navController)
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        // Payment Methods Section
-        Text("Payment Methods", style = MaterialTheme.typography.headlineMedium)
-        PaymentMethodsSection(navController)
+            // Payment Methods Section
+            Text("Payment Methods", style = MaterialTheme.typography.headlineMedium)
+            PaymentMethodsSection(navController)
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        // Past Bookings Section
-        Text("Past Bookings & Payment History", style = MaterialTheme.typography.headlineMedium)
-        PastBookingsSection()
+            // Past Bookings Section
+            Text("Past Bookings & Payment History", style = MaterialTheme.typography.headlineMedium)
+            PastBookingsSection()
+        }
     }
 }
 
@@ -69,13 +85,13 @@ fun PersonalInfoSection(navController: NavHostController) {
             shape = RoundedCornerShape(5.dp)) {
             Text("Edit Info")
         }
-        Button(onClick = { navController.navigate(ROUT_BOOKING) },
+        Button(onClick = { navController.navigate(ROUT_ADDPAYMENT) },
             colors = ButtonDefaults.buttonColors(Color.DarkGray),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
             shape = RoundedCornerShape(5.dp)) {
-            Text("Go to booking")
+            Text("Add payment")
         }
     }
 }
@@ -90,13 +106,13 @@ fun PaymentMethodsSection(navController: NavHostController) {
         Text("Card ending in 1234")
         Text("Expired: 12/24")
         Spacer(modifier = Modifier.height(8.dp))
-        Button(onClick = { navController.navigate(ROUT_ADDPAYMENT) },
+        Button(onClick = { navController.navigate(ROUT_BOOKING_CONFIRMATION) },
             colors = ButtonDefaults.buttonColors(Color.DarkGray),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
             shape = RoundedCornerShape(5.dp)) {
-            Text("Add Payment Method")
+            Text("Go to booking")
         }
     }
 }

@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,120 +41,124 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.Zawadi.apex.R
-import com.Zawadi.apex.navigation.ROUT_GAMES
-import com.Zawadi.apex.navigation.ROUT_HOME
-import com.Zawadi.apex.navigation.ROUT_MESSAGES
-import com.Zawadi.apex.navigation.ROUT_PROFILE
-import com.Zawadi.apex.navigation.ROUT_SETTINGS
+import com.Zawadi.apex.navigation.Routes.ROUT_GAMES
+import com.Zawadi.apex.navigation.Routes.ROUT_MESSAGES
+import com.Zawadi.apex.navigation.Routes.ROUT_PROFILE
+import com.Zawadi.apex.navigation.Routes.ROUT_SETTINGS
+
 
 @Composable
-        fun HomeScreen(navController: NavHostController) {
-            // Main content layout
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                // Profile Section
-                ProfileSection()
+fun HomeScreen(navController: NavHostController) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Background Image
+        Image(
+            painter = painterResource(id = R.drawable.battle), // Replace with your background image
+            contentDescription = "Background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
 
-                Spacer(modifier = Modifier.height(20.dp))
+        // Main content layout
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            ProfileSection()
 
-                // Greeting Section
-                GreetingSection()
+            Spacer(modifier = Modifier.height(20.dp))
 
-                Spacer(modifier = Modifier.height(20.dp))
+            GreetingSection()
 
-                // Navigation Buttons Section
-                NavigationButtons(navController)
+            Spacer(modifier = Modifier.height(20.dp))
 
-                Spacer(modifier = Modifier.height(40.dp))
+            NavigationButtons(navController)
 
-                // Bottom Navigation
-                BottomNavigationBar(navController)
-            }
+            Spacer(modifier = Modifier.height(40.dp))
+
+            BottomNavigationBar(navController)
         }
-
-        @Composable
-        fun ProfileSection() {
-            // Profile Image
-            Box(
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape)
-                    .background(Color.Gray)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.letterlogo), // Replace with actual profile image
-                    contentDescription = "Profile Image",
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
-        }
-
-        @Composable
-        fun GreetingSection() {
-            Text(
-                text = "Welcome, User!",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-        @Composable
-        fun NavigationButtons(navController: NavHostController) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(
-                    onClick = { navController.navigate(ROUT_PROFILE) },
-                    colors = ButtonDefaults.buttonColors(Color.DarkGray),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 20.dp, end = 20.dp),
-                    shape = RoundedCornerShape(5.dp))
-                {
-                    Text(text = "Go to Profile")
-                }
-
-                Button(
-
-                    onClick = { navController.navigate(ROUT_SETTINGS) },
-                    colors = ButtonDefaults.buttonColors(Color.DarkGray),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 20.dp, end = 20.dp),
-                    shape = RoundedCornerShape(5.dp)
-                ) {
-                    Text(text = "Settings")
-                }
-
-                Button(
-                    onClick = { navController.navigate(ROUT_MESSAGES) },
-                    colors = ButtonDefaults.buttonColors(Color.DarkGray),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 20.dp, end = 20.dp),
-                    shape = RoundedCornerShape(5.dp)
-                ) {
-                    Text(text = "Messages")
-                }
-                Button(
-
-                    onClick = { navController.navigate(ROUT_GAMES) },
-                    colors = ButtonDefaults.buttonColors(Color.DarkGray),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 20.dp, end = 20.dp),
-                    shape = RoundedCornerShape(5.dp)
-                ) {
-                    Text(text = "Go to games")
-                }
-            }
-        }
+    }
+}
 
 @Composable
-fun BottomNavigationBar (navController: NavHostController) {
+fun ProfileSection() {
+    Box(
+        modifier = Modifier
+            .size(100.dp)
+            .clip(CircleShape)
+            .background(Color.Gray)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.letterlogo), // Replace with actual profile image
+            contentDescription = "Profile Image",
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+@Composable
+fun GreetingSection() {
+    Text(
+        text = "Welcome, User!",
+        style = MaterialTheme.typography.headlineMedium,
+        fontWeight = FontWeight.Bold
+    )
+}
+
+@Composable
+fun NavigationButtons(navController: NavHostController) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Button(
+            onClick = { navController.navigate(ROUT_PROFILE) },
+            colors = ButtonDefaults.buttonColors(Color.DarkGray),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp),
+            shape = RoundedCornerShape(5.dp)
+        ) {
+            Text(text = "Go to Profile")
+        }
+
+        Button(
+            onClick = { navController.navigate(ROUT_SETTINGS) },
+            colors = ButtonDefaults.buttonColors(Color.DarkGray),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp),
+            shape = RoundedCornerShape(5.dp)
+        ) {
+            Text(text = "Settings")
+        }
+
+        Button(
+            onClick = { navController.navigate(ROUT_MESSAGES) },
+            colors = ButtonDefaults.buttonColors(Color.DarkGray),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp),
+            shape = RoundedCornerShape(5.dp)
+        ) {
+            Text(text = "Messages")
+        }
+
+        Button(
+            onClick = { navController.navigate(ROUT_GAMES) },
+            colors = ButtonDefaults.buttonColors(Color.DarkGray),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp),
+            shape = RoundedCornerShape(5.dp)
+        ) {
+            Text(text = "Go to games")
+        }
+    }
+}
+
+@Composable
+fun BottomNavigationBar(navController: NavHostController) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
 
@@ -187,7 +192,6 @@ data class BottomNavItem(
     val icon: ImageVector,
     val label: String
 )
-
 
 @Preview(showBackground = true)
 @Composable

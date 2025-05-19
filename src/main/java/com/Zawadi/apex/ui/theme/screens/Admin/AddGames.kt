@@ -1,71 +1,153 @@
 package com.Zawadi.apex.ui.theme.screens.Admin
-
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import android.graphics.Bitmap
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.Zawadi.apex.models.Game
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.layout.ContentScale
+import android.widget.Toast
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import com.Zawadi.apex.data.AuthViewGames
+import com.Zawadi.apex.R
+import com.Zawadi.apex.navigation.Routes.ROUT_GAMES_VIEW
+import com.Zawadi.apex.navigation.Routes.ROUT_EDITGAME
+
 
 @Composable
-fun AddGameScreen(navController: NavController) {
+fun AddGamesScreen(navController: NavHostController) {
+    val context = LocalContext.current
+    val authViewGames = remember { AuthViewGames(navController, context) }
+
     var name by remember { mutableStateOf("") }
-    var price by remember { mutableStateOf("") }
     var duration by remember { mutableStateOf("") }
-    var rating by remember { mutableStateOf(0.0) }
+    var price by remember { mutableStateOf("") }
+    var rating by remember { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text("Add New Game", style = MaterialTheme.typography.headlineMedium)
-
-        TextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Game Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        TextField(
-            value = price,
-            onValueChange = { price = it },
-            label = { Text("Price") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        TextField(
-            value = duration,
-            onValueChange = { duration = it },
-            label = { Text("Duration") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        TextField(
-            value = rating.toString(),
-            onValueChange = { rating = it.toDoubleOrNull() ?: 0.0 },
-            label = { Text("Rating") },
-            modifier = Modifier.fillMaxWidth()
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Background Image
+        Image(
+            painter = painterResource(id = R.drawable.assassin),
+            contentDescription = "Background",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
 
-        Button(
-            onClick = {
-                val game = Game(name = name, price = price, duration = duration, rating = rating)
-                addGameToFirestore(game)
-                navController.popBackStack() // Navigate back to the admin panel
-            },
-            modifier = Modifier.fillMaxWidth()
+        // Content on top of the background
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Add Game")
+            Text(
+                text = "Add New Property",
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 16.dp),
+                fontSize = 20.sp,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+
+            OutlinedTextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Name") },
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = MaterialTheme.colorScheme.onBackground,
+                    unfocusedLabelColor = MaterialTheme.colorScheme.onBackground,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.onBackground
+                )
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedTextField(
+                value = duration,
+                onValueChange = { duration = it },
+                label = { Text("Duration") },
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = MaterialTheme.colorScheme.onBackground,
+                    unfocusedLabelColor = MaterialTheme.colorScheme.onBackground
+                )
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedTextField(
+                value = price,
+                onValueChange = { price = it },
+                label = { Text("Price") },
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = MaterialTheme.colorScheme.onBackground,
+                    unfocusedLabelColor = MaterialTheme.colorScheme.onBackground
+                )
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedTextField(
+                value = rating,
+                onValueChange = { rating = it },
+                label = { Text("Rating") },
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = MaterialTheme.colorScheme.onBackground,
+                    unfocusedLabelColor = MaterialTheme.colorScheme.onBackground
+                )
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {
+                    if (name.isNotEmpty() && duration.isNotEmpty() && price.isNotEmpty() && rating.isNotEmpty()) {
+                        authViewGames.uploadGame(name, duration, price, rating)
+                        name = ""
+                        duration = ""
+                        price = ""
+                        rating = ""
+                    } else {
+                        Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show()
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp),
+                shape = RoundedCornerShape(10.dp)
+            ) {
+                Text("Upload Games")
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            TextButton(
+                onClick = { navController.navigate(ROUT_GAMES_VIEW) }
+            ) {
+                Text(text = "View Games", color = MaterialTheme.colorScheme.onBackground)
+            }
+            TextButton(
+                onClick = { navController.navigate(ROUT_EDITGAME) }
+            ) {
+                Text(text = "Edit Game", color = MaterialTheme.colorScheme.onBackground)
+            }
         }
     }
 }

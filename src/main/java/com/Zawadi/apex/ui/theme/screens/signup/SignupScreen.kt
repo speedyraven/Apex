@@ -1,6 +1,7 @@
 package com.Zawadi.apex.ui.theme.screens.signup
 
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,127 +41,126 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.Zawadi.apex.data.AuthViewModel
-import com.Zawadi.apex.navigation.ROUT_LOGIN
+
 import com.Zawadi.apex.R
+import com.Zawadi.apex.navigation.Routes.ROUT_LOGIN
+
+
 
 
 @Composable
-fun SignupScreen(navController: NavHostController) {
-    val context = LocalContext.current
-    val authViewModel = AuthViewModel(navController, context) // ⚠️ Should ideally use a ViewModelProvider or Hilt
-
-    // Form state
-    var name by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var confPassword by remember { mutableStateOf("") }
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        // ✅ Background Image
+fun SignupScreen(navController:NavHostController) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
         Image(
-            painter = painterResource(id = R.drawable.games), // <-- Replace with your image name
-            contentDescription = null,
+            painter = painterResource(id = R.drawable.ravy),
+            contentDescription = "Background Image",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
-
-        // ✅ Optional dark overlay for readability
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.4f))
-        )
-
-        // ✅ Foreground content
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+
 
             Text(
                 text = "Create An Account!",
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Cursive,
-                color = Color.White
+                fontFamily = FontFamily.Cursive
             )
             Spacer(modifier = Modifier.height(30.dp))
+
+            var name by remember { mutableStateOf("") }
+            var email by remember { mutableStateOf("") }
+            var password by remember { mutableStateOf("") }
+            var confpassword by remember { mutableStateOf("") }
 
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Full Name") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
+                label = { Text(text = "Full Name", fontFamily = FontFamily.SansSerif) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
+                    .padding(start = 20.dp, end = 20.dp),
                 shape = RoundedCornerShape(5.dp)
+
             )
 
             Spacer(modifier = Modifier.height(10.dp))
+
 
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email Address") },
+                label = { Text(text = "Email Address", fontFamily = FontFamily.SansSerif) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
+                leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
+                    .padding(start = 20.dp, end = 20.dp),
                 shape = RoundedCornerShape(5.dp)
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
 
+            Spacer(modifier = Modifier.height(10.dp))
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Password") },
+                label = { Text(text = "Password", fontFamily = FontFamily.SansSerif) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "") },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
+                    .padding(start = 20.dp, end = 20.dp),
                 shape = RoundedCornerShape(5.dp)
+
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
             OutlinedTextField(
-                value = confPassword,
-                onValueChange = { confPassword = it },
-                label = { Text("Confirm Password") },
+                value = confpassword,
+                onValueChange = { confpassword = it },
+                label = { Text(text = "Confirm Password", fontFamily = FontFamily.SansSerif) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+                leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "") },
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
+                    .padding(start = 20.dp, end = 20.dp),
                 shape = RoundedCornerShape(5.dp)
+
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
+
+            val context = LocalContext.current
+            val authViewModel = AuthViewModel(navController, context)
             Button(
                 onClick = {
-                    authViewModel.signup(name, email, password, confPassword)
+                    authViewModel.signup(name, email, password, confpassword)
+
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
+                    .padding(start = 20.dp, end = 20.dp),
                 shape = RoundedCornerShape(5.dp)
             ) {
-                Text(text = "Register", color = Color.White)
+                Text(text = "Register")
             }
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -169,20 +169,22 @@ fun SignupScreen(navController: NavHostController) {
                 onClick = {
                     navController.navigate(ROUT_LOGIN)
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray),
+                colors = ButtonDefaults.buttonColors(Color.DarkGray),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
+                    .padding(start = 20.dp, end = 20.dp),
                 shape = RoundedCornerShape(5.dp)
             ) {
-                Text(text = "Login", color = Color.White)
+                Text(text = "Login")
             }
+
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun SignupScreenPreview() {
+@Preview(showBackground = true)
+fun SignupScreenPreview(){
     SignupScreen(navController = rememberNavController())
+
 }

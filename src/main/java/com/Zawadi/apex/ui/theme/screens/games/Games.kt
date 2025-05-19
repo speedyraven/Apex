@@ -38,10 +38,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.Zawadi.apex.navigation.ROUT_GAMEPROFILE
-
-import com.Zawadi.apex.navigation.ROUT_PAYMENT
-import com.Zawadi.apex.navigation.ROUT_PROFILE
+import com.Zawadi.apex.navigation.Routes.ROUT_BOOKING
+import com.Zawadi.apex.navigation.Routes.ROUT_GAMEPROFILE
+import com.Zawadi.apex.navigation.Routes.ROUT_PAYMENT
 
 
 @Composable
@@ -106,7 +105,8 @@ fun GameSelectionScreen(navController: NavHostController) {
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Button(
-                            onClick = {navController.navigate(ROUT_GAMEPROFILE)  },
+                            onClick = {navController.navigate(ROUT_PAYMENT)  },
+
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colorScheme.primary)
                         ) {

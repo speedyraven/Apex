@@ -32,10 +32,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.Zawadi.apex.R
-import com.Zawadi.apex.navigation.ROUT_ABOUT
-import com.Zawadi.apex.navigation.ROUT_HOME
-import com.Zawadi.apex.navigation.ROUT_LOGIN
-import com.Zawadi.apex.navigation.ROUT_SIGNUP
+import com.Zawadi.apex.navigation.Routes.ROUT_LOGIN
+import com.Zawadi.apex.navigation.Routes.ROUT_SIGNUP
+
+
 
 fun checkUserLoggedIn(context: Context): Boolean {
     val sharedPreferences: SharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
